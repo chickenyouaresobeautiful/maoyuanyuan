@@ -26,6 +26,12 @@
     component: './Member',
   },
   {
+    path: '/category',
+    name: 'category',
+    icon: 'AppstoreOutlined',
+    component: './Category',
+  },
+  {
     path: '/goods',
     name: 'goods',
     icon: 'ShoppingOutlined',
@@ -36,6 +42,18 @@
     name: 'order',
     icon: 'AccountBookOutlined',
     component: './Order',
+  },
+  {
+    path: '/spike',
+    name: 'spike',
+    icon: 'FieldTimeOutlined',
+    component: './Spike',
+  },
+  {
+    name: 'spikeTimePeriod',
+    path: '/spikeTimePeriod',
+    hideInMenu: true,
+    component: './SpikeTimePeriod',
   },
   {
     path: '/',

@@ -1,6 +1,9 @@
 export default {
   'menu.welcome': '欢迎',
   'menu.order': '订单管理',
+  'menu.category': '分类管理',
+  'menu.spike': '秒杀活动',
+  'menu.spikeTimePeriod': '秒杀时间段',
   'menu.member': '用户管理',
   'menu.goods': '商品管理',
   'menu.more-blocks': '更多区块',

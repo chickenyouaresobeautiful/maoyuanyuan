@@ -1,4 +1,4 @@
-import { request } from 'umi';
+import {request} from 'umi';
 
 /** 获取商品列表 GET /api/goods/list */
 export async function getGoods(params: any, options?: { [key: string]: any }) {
@@ -58,3 +58,4 @@ export async function getGoodsInfo(goodsId: any, options?: { [key: string]: any 
     ...(options || {}),
   });
 }
+

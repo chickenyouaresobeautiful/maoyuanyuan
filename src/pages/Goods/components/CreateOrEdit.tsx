@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Cascader, Form, message, Modal, Skeleton } from 'antd';
+import {useEffect, useState} from 'react';
+import {Cascader, Form, message, Modal, Skeleton} from 'antd';
 import {
   ProForm,
   ProFormDigit,
@@ -8,9 +8,9 @@ import {
   ProFormTextArea,
   ProFormUploadButton,
 } from '@ant-design/pro-components';
-import { getCategories } from '@/services/ant-design-pro/api/category';
+import {getCategories} from '@/services/ant-design-pro/api/category';
 import Editor from '@/components/Editor';
-import { addGoods, getGoodsInfo, updateGoods } from '@/services/ant-design-pro/api/goods';
+import {addGoods, getGoodsInfo, updateGoods} from '@/services/ant-design-pro/api/goods';
 
 interface CreateOrEditProps {
   isModalOpen: boolean;
@@ -29,9 +29,9 @@ const waitTime = (time: number = 100) => {
 
 const CreateOrEdit = (props: CreateOrEditProps) => {
   const [initialValues, setInitialValues] = useState<API.GoodsEcho>();
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<API.CategoryList[] | undefined>([]);
   const [formObj] = Form.useForm();
-  const { isModalOpen, isShowModal, actionRef, goodsId } = props;
+  const {isModalOpen, isShowModal, actionRef, goodsId} = props;
   const type = goodsId === undefined ? '添加' : '修改';
 
   useEffect(() => {
@@ -53,23 +53,17 @@ const CreateOrEdit = (props: CreateOrEditProps) => {
 
     categories();
     goodsInfo();
-    return () => {};
+    return () => {
+    };
   }, []);
 
-  const setDetails = (value: any) => formObj.setFieldsValue({ details: value });
+  const setDetails = (value: any) => formObj.setFieldsValue({details: value});
 
   //控制表单的提交
   const handleSubmit = async (values: any) => {
     await waitTime(2000);
     console.log(values);
-    let response = {};
-    if (goodsId === undefined) {
-      //没有uid，发送添加请求
-      response = await addGoods(values);
-    } else {
-      //有uid，发送修改请求
-      response = await updateGoods(goodsId, values);
-    }
+    const response = goodsId === undefined ? await addGoods(values) : await updateGoods(goodsId, values)
     if (response.code === 0) {
       message.success(`${type}成功`);
       //刷新表格
@@ -94,7 +88,7 @@ const CreateOrEdit = (props: CreateOrEditProps) => {
         {
           //只有是编辑的情况下，要查询的数据还没有返回，这时候才使用骨架屏
           initialValues === undefined && goodsId !== undefined ? (
-            <Skeleton active />
+            <Skeleton active/>
           ) : (
             <ProForm<{
               name: string;
@@ -111,7 +105,7 @@ const CreateOrEdit = (props: CreateOrEditProps) => {
               <ProFormItem
                 name="catId"
                 label="分类"
-                rules={[{ required: true, message: '请选择商品分类' }]}
+                rules={[{required: true, message: '请选择商品分类'}]}
               >
                 <Cascader
                   fieldNames={{
@@ -126,34 +120,34 @@ const CreateOrEdit = (props: CreateOrEditProps) => {
                 name="title"
                 label="商品标题"
                 placeholder="请输入标题"
-                rules={[{ required: true, message: '请输入标题' }]}
+                rules={[{required: true, message: '请输入标题'}]}
               />
               <ProFormDigit
                 name="price"
                 label="价格"
                 placeholder="请输入价格"
                 min={0}
-                rules={[{ required: true, message: '请输入价格' }]}
+                rules={[{required: true, message: '请输入价格'}]}
               />
               <ProFormDigit
                 name="stock"
                 label="库存"
                 placeholder="请输入库存"
                 min={0}
-                rules={[{ required: true, message: '请输入库存' }]}
+                rules={[{required: true, message: '请输入库存'}]}
               />
               <ProFormTextArea
                 name="description"
                 label="商品描述"
                 placeholder="请输入商品描述信息"
-                rules={[{ required: true, message: '商品描述信息不能为空' }]}
+                rules={[{required: true, message: '商品描述信息不能为空'}]}
               />
               <ProForm.Item
                 name="details"
                 label="商品详情"
-                rules={[{ required: true, message: '商品详情信息不能为空' }]}
+                rules={[{required: true, message: '商品详情信息不能为空'}]}
               >
-                <Editor setDetails={setDetails} content={initialValues?.details} />
+                <Editor setDetails={setDetails} content={initialValues?.details}/>
               </ProForm.Item>
               {goodsId !== undefined ? (
                 <ProFormUploadButton
@@ -173,7 +167,7 @@ const CreateOrEdit = (props: CreateOrEditProps) => {
                   label="封面"
                   valuePropName={'fileList'}
                   max={1}
-                  rules={[{ required: true, message: '请上传封面' }]}
+                  rules={[{required: true, message: '请上传封面'}]}
                   fieldProps={{
                     name: 'cover',
                     listType: 'picture-card',

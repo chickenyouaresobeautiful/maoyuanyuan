@@ -95,12 +95,35 @@ declare namespace API {
     type?: NoticeIconItemType;
   };
 
+  type SpikeTimePeriodItem = {
+    id: number;
+    name: string;
+    startTime: string;
+    endTime: string;
+    status: number;
+  };
+
   type UserEcho = {
     username?: string;
     password?: boolean;
     phone?: string;
     email?: string;
   };
+
+  type CategoryResult = {
+    categoryList?: CategoryList[];
+    code?: number;
+    msg?: string;
+  }
+
+  interface CategoryList {
+    key: React.ReactNode;
+    catId: number;
+    name: string;
+    parentCid: number;
+    catLevel: number;
+    children?: CategoryList[];
+  }
 
   type GoodsEcho = {
     catId?: number[];
